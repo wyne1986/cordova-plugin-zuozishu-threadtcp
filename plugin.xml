@@ -4,7 +4,7 @@
     xmlns:rim="http://www.blackberry.com/ns/widgets"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="cordova-plugin-zuozishu-threadtcp"
-    version="1.0.4">
+    version="1.0.5">
 
     <name>ThreadTcp</name>
     <description>A cordova plugin, a JS version of Thread Tcp</description>
@@ -37,4 +37,15 @@
 
         <source-file src="src/android/ThreadTcp.java" target-dir="src/com/zuozishu" />
     </platform>
+
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="ThreadTcp">
+                <param name="ios-package" value="ThreadTcp"/>
+            </feature>
+        </config-file>
+        <header-file src="src/ios/ThreadTcp.h" />
+        <source-file src="src/ios/ThreadTcp.m" />
+    </platform>
+
 </plugin>
