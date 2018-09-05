@@ -133,7 +133,10 @@ public class ThreadTcp extends CordovaPlugin {
                         cordova.getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                webView.loadUrl("javascript:ThreadTcp.getMessage('" + new String(bytes) + "');");
+                                webView.loadUrl("javascript:(function(){\n" +
+                                        "        var evt = document.createEvent(\"HTMLEvents\");\n" +
+                                        "        evt.message = '"+new String(bytes)+"';evt.initEvent(\"ThreadTcpMessage\", true, true);\n" +
+                                        "        document.dispatchEvent(evt);})()");
                             }
                         });
                     }

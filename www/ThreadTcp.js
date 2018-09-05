@@ -31,9 +31,6 @@ cordova.define("cordova-plugin-zuozishu-threadtcp.ThreadTcp",
                     },'ThreadTcp','connect',args);
                 }
             },
-            getMessage: function(data){
-                console.log(data);
-            },
             sendMessage: function(data,cb,eb){
                 cordova.exec(function(e){
                     if(e==1){
@@ -55,6 +52,9 @@ cordova.define("cordova-plugin-zuozishu-threadtcp.ThreadTcp",
             initEvent: function(){
                 if(!ThreadTcp.inited){
                     ThreadTcp.inited = true;
+                    document.addEventListener("ThreadTcpMessage",function(evt){
+                        if(typeof ThreadTcp.onMessage == 'function')ThreadTcp.onMessage(evt.message);
+                    });
                     document.addEventListener("ThreadTcpConnected",function(evt){
                         ThreadTcp.connected = true;
                         if(typeof ThreadTcp.onConnected == 'function')ThreadTcp.onConnected(evt);
@@ -75,6 +75,9 @@ cordova.define("cordova-plugin-zuozishu-threadtcp.ThreadTcp",
                         if(typeof ThreadTcp.onWarning == 'function')ThreadTcp.onWarning(evt);
                     });
                 }
+            },
+            onMessage: function(data){
+                console.log(data);
             },
             onConnected: function(evt){
                 console.log(evt.address + ":" + evt.port);
