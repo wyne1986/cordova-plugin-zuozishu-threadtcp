@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:rim="http://www.blackberry.com/ns/widgets"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="cordova-plugin-zuozishu-threadtcp"
+    version="1.0.1">
+
+    <name>ThreadTcp</name>
+    <description>A cordova plugin, a JS version of Thread Tcp</description>
+    <license>MIT</license>
+    <keywords>cordova,tcp,android</keywords>
+    <repo>https://github.com/wyne1986/cordova-plugin-zuozishu-threadtcp</repo>
+    <issue>https://github.com/wyne1986/cordova-plugin-zuozishu-threadtcp/issues</issue>
+
+    <!-- js module-->
+    <js-module src="www/ThreadTcp.js" name="ThreadTcp">
+        <clobbers target="ThreadTcp" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="ThreadTcp">
+                <param name="android-package" value="com.zuozishu.ThreadTcp"/>
+            </feature>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.INTERNET"/>
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+            <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        </config-file>
+
+        <source-file src="src/android/ThreadTcp.java" target-dir="src/com/zuozishu" />
+    </platform>
+</plugin>

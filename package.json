@@ -1,0 +1,34 @@
+{
+  "name": "cordova-plugin-zuozishu-threadtcp",
+  "version": "1.0.1",
+  "description": "A cordova plugin, a JS version of Thread Tcp",
+  "cordova": {
+    "id": "cordova-plugin-zuozishu-threadtcp",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wyne1986/cordova-plugin-zuozishu-threadtcp"
+  },
+  "keywords": [
+    "cordova",
+    "tcp",
+    "cordova-android"
+  ],
+  "engines": {
+    "cordovaDependencies": {
+        "<2.0.0": {
+          "cordova": ">=6.5.0",
+          "cordova-android": ">=6.4.0"
+        }
+    }
+  },
+  "author": "wyne <366659539@qq.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wyne1986/cordova-plugin-zuozishu-threadtcp/issues"
+  },
+  "homepage": "https://github.com/wyne1986/cordova-plugin-zuozishu-threadtcp#readme"
+}
