@@ -16,17 +16,14 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import <AudioToolbox/AudioServices.h>
 #import <Cordova/CDVPlugin.h>
 
-@interface CDVNotification : CDVPlugin <UIAlertViewDelegate>{}
+@interface ThreadTcp : CDVPlugin {}
 
 - (void)connect:(CDVInvokedUrlCommand*)command;
 - (void)sendMessage:(CDVInvokedUrlCommand*)command;
 - (void)getStatus:(CDVInvokedUrlCommand*)command;
-
-@end
-
-@interface CDVAlertView : UIAlertView {}
-@property (nonatomic, copy) NSString* callbackId;
 
 @end

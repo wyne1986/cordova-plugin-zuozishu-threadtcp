@@ -17,17 +17,27 @@
 
 #import "ThreadTcp.h"
 
+@implementation ThreadTcp
+
 - (void)connect:(CDVInvokedUrlCommand*)command
 {
-
+    NSLog(@"connect");
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"connect"];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 - (void)sendMessage:(CDVInvokedUrlCommand*)command
 {
-
+    NSLog(@"sendMessage");
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"sendMessage"];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 - (void)getStatus:(CDVInvokedUrlCommand*)command
 {
-
+    NSLog(@"getStatus");
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"getStatus"];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
+
+@end
