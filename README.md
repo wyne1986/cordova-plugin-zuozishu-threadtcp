@@ -1,6 +1,8 @@
 # cordova-plugin-zuozishu-threadtcp
 cordova plugin tcp socket thread, just for android now,  ios wait for later
 
+* develop eviroment in android@6.4.0
+
 # API
 * ThreadTcp.onConnected = function(){}  //it will be trigger when the connect success
 * ThreadTcp.onClose = function(){}  //it will be trigger when the connect closed
