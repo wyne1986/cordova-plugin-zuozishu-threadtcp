@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-zuozishu-threadtcp",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A cordova plugin, a JS version of Thread Tcp",
   "cordova": {
     "id": "cordova-plugin-zuozishu-threadtcp",

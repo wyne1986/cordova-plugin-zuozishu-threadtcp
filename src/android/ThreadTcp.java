@@ -14,6 +14,7 @@ import java.net.NoRouteToHostException;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.SocketTimeoutException;
+import java.net.URLEncoder;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -102,10 +103,7 @@ public class ThreadTcp extends CordovaPlugin {
                                  @Override
                                  public void run() {
                                      status = 0;
-                                     webView.loadUrl("javascript:(function(){\n" +
-                                             "        var evt = document.createEvent(\"HTMLEvents\");\n" +
-                                             "        evt.message = 'connect has been closed from remote "+address+":"+port+"';evt.initEvent(\"ThreadTcpClose\", true, true);\n" +
-                                             "        document.dispatchEvent(evt);})()");
+                                     webView.loadUrl("javascript:ThreadTcp.onClose({'message':'connect has been closed from remote "+address+":"+port+"'});");
                                      release();
                                  }
                              });
@@ -118,10 +116,7 @@ public class ThreadTcp extends CordovaPlugin {
                     cordova.getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            webView.loadUrl("javascript:(function(){\n" +
-                                    "        var evt = document.createEvent(\"HTMLEvents\");\n" +
-                                    "        evt.message = 'connected';evt.address = '"+ address +"';evt.port = "+port+";evt.initEvent(\"ThreadTcpConnected\", true, true);\n" +
-                                    "        document.dispatchEvent(evt);})()");
+                            webView.loadUrl("javascript:ThreadTcp.onConnected({'message':'connected','address':'"+address+"','port':"+port+"});");
                             timer.schedule(timerTask,period,period);
                         }
                     });
@@ -133,10 +128,13 @@ public class ThreadTcp extends CordovaPlugin {
                         cordova.getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                webView.loadUrl("javascript:(function(){\n" +
-                                        "        var evt = document.createEvent(\"HTMLEvents\");\n" +
-                                        "        evt.message = '"+new String(bytes)+"';evt.initEvent(\"ThreadTcpMessage\", true, true);\n" +
-                                        "        document.dispatchEvent(evt);})()");
+                                String data = "";
+                                try{
+                                    data = URLEncoder.encode(new String(bytes),"UTF-8").replace("+","%20");
+                                }catch(Exception ue){
+
+                                }
+                                webView.loadUrl("javascript:ThreadTcp.onMessage('"+ data +"');");
                             }
                         });
                     }
@@ -144,10 +142,7 @@ public class ThreadTcp extends CordovaPlugin {
                     cordova.getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            webView.loadUrl("javascript:(function(){\n" +
-                                    "        var evt = document.createEvent(\"HTMLEvents\");\n" +
-                                    "        evt.message = '" + ioe.getMessage() + "';evt.initEvent(\"ThreadTcpWarning\", true, true);\n" +
-                                    "        document.dispatchEvent(evt);})()");
+                            webView.loadUrl("javascript:ThreadTcp.onWarning({'message':'"+ioe.getMessage()+"'});");
                         }
                     });
                 }
@@ -158,40 +153,28 @@ public class ThreadTcp extends CordovaPlugin {
                 cordova.getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        webView.loadUrl("javascript:(function(){\n" +
-                                "        var evt = document.createEvent(\"HTMLEvents\");\n" +
-                                "        evt.message = 'connect timeout to remote "+address+":"+port+"';evt.initEvent(\"ThreadTcpError\", true, true);\n" +
-                                "        document.dispatchEvent(evt);})()");
+                        webView.loadUrl("javascript:ThreadTcp.onError({'message':'connect timeout to remote "+address+":"+port+"'});");
                     }
                 });
             } else if (e instanceof NoRouteToHostException) {
                 cordova.getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        webView.loadUrl("javascript:(function(){\n" +
-                                "        var evt = document.createEvent(\"HTMLEvents\");\n" +
-                                "        evt.message = 'address not found on "+address+":"+port+"';evt.initEvent(\"ThreadTcpError\", true, true);\n" +
-                                "        document.dispatchEvent(evt);})()");
+                        webView.loadUrl("javascript:ThreadTcp.onError({'message':'address not found on remote "+address+":"+port+"'});");
                     }
                 });
             } else if (e instanceof ConnectException) {
                 cordova.getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        webView.loadUrl("javascript:(function(){\n" +
-                                "        var evt = document.createEvent(\"HTMLEvents\");\n" +
-                                "        evt.message = 'connect has been refused by remote "+address+":"+port+"';evt.initEvent(\"ThreadTcpError\", true, true);\n" +
-                                "        document.dispatchEvent(evt);})()");
+                        webView.loadUrl("javascript:ThreadTcp.onError({'message':'connect has been refused by remote "+address+":"+port+"'});");
                     }
                 });
             } else {
                 cordova.getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        webView.loadUrl("javascript:(function(){\n" +
-                                "        var evt = document.createEvent(\"HTMLEvents\");\n" +
-                                "        evt.message = '"+e.getMessage()+"';evt.initEvent(\"ThreadTcpError\", true, true);\n" +
-                                "        document.dispatchEvent(evt);})()");
+                        webView.loadUrl("javascript:ThreadTcp.onError({'message':'"+e.getMessage()+"'});");
                     }
                 });
             }
